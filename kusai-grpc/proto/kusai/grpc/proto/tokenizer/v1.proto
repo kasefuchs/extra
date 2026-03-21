@@ -1,0 +1,3 @@
+syntax = "proto3";
+
+package kusai.grpc.proto.tokenizer.v1;
