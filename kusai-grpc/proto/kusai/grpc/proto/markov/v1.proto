@@ -1,3 +1,0 @@
-syntax = "proto3";
-
-package kusai.grpc.proto.markov.v1;

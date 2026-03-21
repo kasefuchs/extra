@@ -1,5 +1,0 @@
-{
-  "name": "kusai-grpc",
-  "version-string": "0.0.0",
-  "dependencies": ["abseil", "cli11", "grpc", "pugixml", "xxhash"]
-}

@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package kusai.service.proto.graph.v1;
+
+message CreateGraphRequest {
+  message MemoryGraphConfig {}
+
+  oneof impl {
+    MemoryGraphConfig memory = 1;
+  }
+}
+
+message CreateGraphResponse {
+  uint32 graph_id = 1;
+}
+
+service GraphService {
+  rpc CreateGraph(CreateGraphRequest) returns (CreateGraphResponse);
+}

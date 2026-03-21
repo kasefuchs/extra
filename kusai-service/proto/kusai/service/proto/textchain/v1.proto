@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package kusai.service.proto.textchain.v1;
+
+message CreateTextChainRequest {
+  uint32 markov_id = 1;
+  uint32 tokenizer_id = 2;
+}
+
+message CreateTextChainResponse {
+  uint32 textchain_id = 1;
+}
+
+service TextChainService {
+  rpc CreateTextChain(CreateTextChainRequest) returns (CreateTextChainResponse);
+}

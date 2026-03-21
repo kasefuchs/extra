@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package kusai.service.proto.tokenizer.v1;
+
+message CreateTokenizerRequest {
+  message SimpleTokenizerConfig {}
+
+  oneof impl {
+    SimpleTokenizerConfig simple = 1;
+  }
+}
+
+message CreateTokenizerResponse {
+  uint32 tokenizer_id = 1;
+}
+
+service TokenizerService {
+  rpc CreateTokenizer(CreateTokenizerRequest) returns (CreateTokenizerResponse);
+}
