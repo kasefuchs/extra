@@ -16,4 +16,6 @@ target_sources(tokenizer PUBLIC
 target_link_libraries(tokenizer
   PUBLIC
     proto
+    registry
+    kusai::tokenizer
 )

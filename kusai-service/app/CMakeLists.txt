@@ -9,6 +9,10 @@ target_include_directories(kusai-service
 target_link_libraries(kusai-service
   PRIVATE
     proto
+    graph
+    markov
     registry
-    kusai::textchain
+    textchain
+    tokenizer
+    gRPC::grpc++_reflection
 )

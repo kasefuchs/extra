@@ -16,4 +16,6 @@ target_sources(textchain PUBLIC
 target_link_libraries(textchain
   PUBLIC
     proto
+    registry
+    kusai::textchain
 )

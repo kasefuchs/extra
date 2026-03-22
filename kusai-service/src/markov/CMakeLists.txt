@@ -16,4 +16,6 @@ target_sources(markov PUBLIC
 target_link_libraries(markov
   PUBLIC
     proto
+    registry
+    kusai::markov
 )

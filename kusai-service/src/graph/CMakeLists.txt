@@ -16,4 +16,6 @@ target_sources(graph PUBLIC
 target_link_libraries(graph
   PUBLIC
     proto
+    registry
+    kusai::graph
 )

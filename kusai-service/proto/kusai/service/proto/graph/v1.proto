@@ -2,18 +2,27 @@ syntax = "proto3";
 
 package kusai.service.proto.graph.v1;
 
-message CreateGraphRequest {
-  message MemoryGraphConfig {}
+message CreateRequest {
+  message MemoryConfig {}
 
   oneof impl {
-    MemoryGraphConfig memory = 1;
+    MemoryConfig memory = 1;
   }
 }
 
-message CreateGraphResponse {
+message CreateResponse {
   uint32 graph_id = 1;
 }
 
+message DeleteRequest {
+  uint32 graph_id = 1;
+}
+
+message DeleteResponse {
+  bool success = 1;
+}
+
 service GraphService {
-  rpc CreateGraph(CreateGraphRequest) returns (CreateGraphResponse);
+  rpc Create(CreateRequest) returns (CreateResponse);
+  rpc Delete(DeleteRequest) returns (DeleteResponse);
 }
