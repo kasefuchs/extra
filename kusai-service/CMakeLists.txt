@@ -13,3 +13,5 @@ include(Dependencies)
 add_subdirectory(proto)
 add_subdirectory(src)
 add_subdirectory(app)
+
+include(Install)
