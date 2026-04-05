@@ -10,3 +10,18 @@
 # CMake
 cmake-build/
 cmake-build-*/
+
+# --- Python ---
+# Cache
+__pycache__/
+
+# Environment
+.venv/
+
+# Lockfile
+uv.lock
+
+# --- Projects ---
+# Kusai Mastodon
+config.yaml
+state.json
