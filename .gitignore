@@ -6,22 +6,20 @@
 # VSCode
 .vscode/
 
-# --- C / C++ ---
+# --- Tools ---
 # CMake
 cmake-build/
 cmake-build-*/
 
-# --- Python ---
-# Cache
+# Python
 __pycache__/
-
-# Environment
 .venv/
-
-# Lockfile
 uv.lock
 
 # --- Projects ---
 # Kusai Mastodon
 config.yaml
 state.json
+
+# Teardown Promo
+teardown-promo/dist/

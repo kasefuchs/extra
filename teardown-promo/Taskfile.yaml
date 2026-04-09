@@ -1,0 +1,18 @@
+---
+version: 3
+
+tasks:
+  default:
+    vars:
+      id: "{{uuid}}"
+    # language="sh"
+    cmds:
+      - mkdir -p ./dist/
+      - printf "http://promo.teardowngame.com/{{.id}}.zip" > ./dist/promo.php
+      - cd ./src/ && zip -r "../dist/{{.id}}.zip" ./
+  serve:
+    # language="sh"
+    cmd: python -m http.server -d ./dist/ 80
+  clean:
+    # language="sh"
+    cmd: rm -rf ./dist/

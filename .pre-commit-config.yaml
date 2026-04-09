@@ -17,7 +17,7 @@ repos:
       - id: prettier
 
   - repo: https://github.com/pre-commit/mirrors-clang-format
-    rev: v22.1.2
+    rev: v22.1.3
     hooks:
       - id: clang-format
         types_or: [c, c++, proto]
@@ -26,3 +26,19 @@ repos:
     rev: 26.3.1
     hooks:
       - id: black
+
+  - repo: https://github.com/stefmolin/exif-stripper
+    rev: 1.2.0
+    hooks:
+      - id: strip-exif
+
+  - repo: https://github.com/boidolr/pre-commit-images
+    rev: v1.12.0
+    hooks:
+      - id: optimize-png
+      - id: optimize-jpg
+
+  - repo: https://github.com/hukkin/mdformat
+    rev: 1.0.0
+    hooks:
+      - id: mdformat

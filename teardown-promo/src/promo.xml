@@ -1,0 +1,9 @@
+<promo>
+  <group title="Group" format="landscape" size="large">
+    <item id="placeholder-id" title="Item" author="Kasefuchs" tags="test" image="assets/placeholder.jpg">
+      Placeholder text
+
+      (or something)
+    </item>
+  </group>
+</promo>
