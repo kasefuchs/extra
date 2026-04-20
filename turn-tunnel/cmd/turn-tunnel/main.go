@@ -54,5 +54,7 @@ func main() {
 		log.Fatal().Err(err).Msg("Failed to start tunnel")
 	}
 
-	tun.Wait()
+	if err := tun.Wait(); err != nil {
+		log.Fatal().Err(err).Msg("Failed to wait tunnel")
+	}
 }

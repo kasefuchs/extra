@@ -4,18 +4,16 @@ import (
 	"context"
 	"fmt"
 	"net"
-	"sync"
 	"sync/atomic"
 
-	"codeberg.org/kasefuchs/go-kit/log"
+	"golang.org/x/sync/errgroup"
 )
 
 type Tunnel struct {
 	cfg Config
 
-	wg     sync.WaitGroup
-	ctx    context.Context
-	cancel context.CancelFunc
+	wg  *errgroup.Group
+	ctx context.Context
 
 	remoteAddr net.Addr
 	clientAddr atomic.Value
@@ -25,12 +23,12 @@ type Tunnel struct {
 }
 
 func NewTunnel(pCtx context.Context, cfg Config, relayConn net.PacketConn) *Tunnel {
-	ctx, cancel := context.WithCancel(pCtx)
+	wg, ctx := errgroup.WithContext(pCtx)
 
 	return &Tunnel{
 		cfg:       cfg,
+		wg:        wg,
 		ctx:       ctx,
-		cancel:    cancel,
 		relayConn: relayConn,
 	}
 }
@@ -45,22 +43,17 @@ func (t *Tunnel) Start() error {
 		return fmt.Errorf("could not listen on %s: %w", t.cfg.Listen, err)
 	}
 
-	context.AfterFunc(t.ctx, func() {
-		_ = t.listenConn.Close()
-	})
-
 	t.wg.Go(t.localToRelayLoop)
 	t.wg.Go(t.relayToLocalLoop)
 
 	return nil
 }
 
-func (t *Tunnel) Wait() {
-	t.wg.Wait()
+func (t *Tunnel) Wait() error {
+	return t.wg.Wait()
 }
 
 func (t *Tunnel) Close() error {
-	t.cancel()
 	if t.listenConn != nil {
 		if err := t.listenConn.Close(); err != nil {
 			return fmt.Errorf("could not close listener: %w", err)
@@ -70,41 +63,41 @@ func (t *Tunnel) Close() error {
 	return nil
 }
 
-func (t *Tunnel) localToRelayLoop() {
-	defer t.cancel()
-
+func (t *Tunnel) localToRelayLoop() error {
 	buf := make([]byte, t.cfg.MTU)
 	for {
-		if t.ctx.Err() != nil {
-			return
+		select {
+		case <-t.ctx.Done():
+			return fmt.Errorf("context canceled: %w", t.ctx.Err())
+		default:
 		}
 
 		n, addr, err := t.listenConn.ReadFrom(buf)
 		if err != nil {
-			return
+			return fmt.Errorf("could not read from listener: %w", err)
 		}
 
 		t.clientAddr.Store(addr)
 
 		_, err = t.relayConn.WriteTo(buf[:n], t.remoteAddr)
 		if err != nil {
-			return
+			return fmt.Errorf("could not write to relay: %w", err)
 		}
 	}
 }
 
-func (t *Tunnel) relayToLocalLoop() {
-	defer t.cancel()
-
+func (t *Tunnel) relayToLocalLoop() error {
 	buf := make([]byte, t.cfg.MTU)
 	for {
-		if t.ctx.Err() != nil {
-			return
+		select {
+		case <-t.ctx.Done():
+			return fmt.Errorf("context canceled: %w", t.ctx.Err())
+		default:
 		}
 
 		n, _, err := t.relayConn.ReadFrom(buf)
 		if err != nil {
-			return
+			return fmt.Errorf("could not read from relay: %w", err)
 		}
 
 		addrVal := t.clientAddr.Load()
@@ -114,13 +107,12 @@ func (t *Tunnel) relayToLocalLoop() {
 
 		addr, ok := addrVal.(net.Addr)
 		if !ok {
-			log.Warn().Msg("Invalid address type in store")
-			return
+			return fmt.Errorf("invalid address type in store")
 		}
 
 		_, err = t.listenConn.WriteTo(buf[:n], addr)
 		if err != nil {
-			return
+			return fmt.Errorf("could not write to relay: %w", err)
 		}
 	}
 }
