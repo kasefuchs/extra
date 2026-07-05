@@ -2,6 +2,7 @@
 .idea/
 .vscode/
 .zed/
+.gram/
 *.iml
 
 # --- Tools ---

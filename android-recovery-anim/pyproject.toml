@@ -1,0 +1,17 @@
+[project]
+name = "android-recovery-anim"
+version = "0.1.0"
+requires-python = ">=3.12"
+
+dependencies = [
+  "pillow>=12.3.0",
+  "rich>=14.3.3",
+  "typer>=0.24.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/android_recovery_anim"]
