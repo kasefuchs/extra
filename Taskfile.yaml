@@ -1,7 +1,5 @@
----
 version: 3
-
 includes:
-  teardown-promo:
-    dir: ./teardown-promo
-    taskfile: teardown-promo/Taskfile.yaml
+  projects:
+    dir: ./projects
+    taskfile: ./projects/Taskfile.yaml

@@ -4,7 +4,10 @@ version = "0.1.0"
 requires-python = ">=3.12"
 
 [tool.uv.workspace]
-members = ["kusai-mastodon", "android-recovery-anim"]
+members = [
+  "projects/kusai-mastodon",
+  "projects/android-recovery-anim",
+]
 
 [tool.black]
 line-length = 120

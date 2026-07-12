@@ -1,6 +1,4 @@
----
 Checks: >-
-  misc-include-cleaner,
-  modernize-deprecated-headers
+  misc-include-cleaner, modernize-deprecated-headers
 WarningsAsErrors: ""
 HeaderFilterRegex: ".*"
