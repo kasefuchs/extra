@@ -4,8 +4,8 @@ import (
 	"context"
 	"flag"
 
-	"codeberg.org/kasefuchs/extra/turn-tunnel/internal/pkg/client"
-	"codeberg.org/kasefuchs/extra/turn-tunnel/internal/pkg/tunnel"
+	"codeberg.org/kasefuchs/extra/projects/turn-tunnel/internal/pkg/client"
+	"codeberg.org/kasefuchs/extra/projects/turn-tunnel/internal/pkg/tunnel"
 	"codeberg.org/kasefuchs/go-kit/config"
 	"codeberg.org/kasefuchs/go-kit/log"
 	"github.com/knadh/koanf/parsers/yaml"

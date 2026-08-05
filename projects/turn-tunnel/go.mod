@@ -1,4 +1,4 @@
-module codeberg.org/kasefuchs/extra/turn-tunnel
+module codeberg.org/kasefuchs/extra/projects/turn-tunnel
 
 go 1.26.2
 
