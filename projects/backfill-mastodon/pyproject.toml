@@ -1,0 +1,23 @@
+[project]
+name = "backfill-mastodon"
+version = "0.0.0"
+requires-python = ">=3.12"
+
+dependencies = [
+    "mastodon-py>=2.1.4",
+    "pydantic>=2.13.4",
+    "pydantic-settings>=2.14.2",
+    "pyyaml>=6.0.3",
+    "rich>=14.3.3",
+    "typer>=0.24.1",
+]
+
+[project.urls]
+Homepage = "https://codeberg.org/kasefuchs/extra/src/branch/main/projects/backfill-mastodon"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/backfill_mastodon"]

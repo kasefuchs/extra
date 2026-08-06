@@ -8,7 +8,9 @@ app = typer.Typer()
 
 @app.command()
 def main(
-    api_url: str = typer.style("Enter Mastodon instance URL", fg=typer.colors.YELLOW),
+    api_url: str = typer.Option(
+        prompt=typer.style("Enter Mastodon instance URL", fg=typer.colors.YELLOW),
+    ),
     app_name: str | None = None,
     scopes: list[str] = ["read", "write"],
     client_id: str | None = None,
