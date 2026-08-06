@@ -1,11 +1,10 @@
-# --- IDE / Editor ---
+# Editors
 .idea/
 .vscode/
 .zed/
 .gram/
 *.iml
 
-# --- Tools ---
 # CMake
 cmake-build/
 cmake-build-*/
@@ -14,3 +13,7 @@ cmake-build-*/
 __pycache__/
 .venv/
 uv.lock
+
+# Helm
+**/charts/**/charts/
+**/charts/**/Chart.lock

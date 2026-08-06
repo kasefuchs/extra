@@ -1,0 +1,3 @@
+match_type: doublestar
+exclude:
+  - charts/**/templates/**
