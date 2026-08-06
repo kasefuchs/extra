@@ -18,7 +18,7 @@ class StickerFormat(IntEnum):
     LOTTIE = 3
     GIF = 4
 
-    @property
+    @cached_property
     def extension(self) -> str:
         return {
             StickerFormat.PNG: "png",
