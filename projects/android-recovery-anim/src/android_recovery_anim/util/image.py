@@ -1,12 +1,10 @@
-from typing import List, Tuple
-
 from PIL import Image
 
 
 from android_recovery_anim.model import Info
 
 
-def extract_frames(img: Image.Image) -> List[Image.Image]:
+def extract_frames(img: Image.Image) -> list[Image.Image]:
     info = Info.from_image(img)
     if not info.is_valid:
         raise ValueError("Source image is not valid")
