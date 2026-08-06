@@ -15,5 +15,5 @@ __pycache__/
 uv.lock
 
 # Helm
-**/charts/**/charts/
-**/charts/**/Chart.lock
+**/charts/*/charts/
+**/charts/*/Chart.lock
