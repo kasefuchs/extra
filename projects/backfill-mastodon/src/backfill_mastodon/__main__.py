@@ -27,8 +27,10 @@ async def main(config_path: Path = Path("config.yaml")):
 
                 for target in remote.targets:
                     key = f"{remote.api_url}:{target.account}"
-                    processed = ctx.state.progress[key]
-                    task = progress.add_task(f"Backfilling {target.account} from {remote.api_url}")
+                    task = progress.add_task(
+                        f"Backfilling {target.account} from {remote.api_url}",
+                        completed=ctx.state.progress[key],
+                    )
 
                     async def process_status(status):
                         if status.url:
@@ -40,7 +42,7 @@ async def main(config_path: Path = Path("config.yaml")):
 
                     try:
                         account = remote_client.account_lookup(target.account)
-                        progress.update(task, total=account.statuses_count, advance=processed)
+                        progress.update(task, total=account.statuses_count)
 
                         while True:
                             last_id = ctx.state.max_id.get(key)
