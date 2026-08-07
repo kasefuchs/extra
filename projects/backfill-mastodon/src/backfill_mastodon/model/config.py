@@ -8,6 +8,8 @@ from mastodon import Mastodon
 class TargetConfig(BaseModel):
     account: str
     limit: int = 40
+    exclude_replies: bool = False
+    exclude_reblogs: bool = False
 
 
 class InstanceConfig(BaseModel):
@@ -36,6 +38,7 @@ class Config(BaseSettings):
     local: InstanceConfig = Field(default_factory=InstanceConfig)
     remotes: list[RemoteConfig] = Field(default_factory=list)
     state_path: Path = Path("state.json")
+    concurrency: int = 10
 
     @classmethod
     def settings_customise_sources(
