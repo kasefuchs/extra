@@ -3,7 +3,6 @@
 import typer
 from functools import cached_property
 from pathlib import Path
-from urllib.request import urlretrieve
 from pydantic import BaseModel, ConfigDict, TypeAdapter
 from enum import IntEnum
 from os.path import join
