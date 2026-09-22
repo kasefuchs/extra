@@ -43,6 +43,6 @@ func linkURI(account any, receiver *proxyman.ReceiverConfig, m Metadata) (*url.U
 	case *vless.Account:
 		return vlessURI(acc, receiver, m)
 	default:
-		return nil, fmt.Errorf("unsupported protocol: %T", acc)
+		return nil, fmt.Errorf("%w: %T", ErrUnsupportedProtocol, acc)
 	}
 }

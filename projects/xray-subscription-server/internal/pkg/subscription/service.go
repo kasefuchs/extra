@@ -2,10 +2,12 @@ package subscription
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/url"
 
 	"codeberg.org/kasefuchs/extra/projects/xray-subscription-server/internal/pkg/link"
+	"codeberg.org/kasefuchs/go-kit/log"
 	"github.com/xtls/xray-core/app/proxyman/command"
 	"github.com/xtls/xray-core/core"
 )
@@ -40,14 +42,19 @@ func (s *Service) buildSubscription(inbounds []*core.InboundHandlerConfig, email
 	var uris []*url.URL
 
 	for _, inbound := range inbounds {
-		meta, ok := s.metadata[inbound.GetTag()]
+		tag := inbound.GetTag()
+		meta, ok := s.metadata[tag]
 		if !ok {
 			continue
 		}
 
 		built, err := link.Build(inbound, meta, email)
 		if err != nil {
-			return nil, err
+			if !errors.Is(err, link.ErrUserNotFound) {
+				log.Warn().Err(err).Str("tag", tag).Msg("failed to build inbound links, skipping")
+			}
+			
+			continue
 		}
 
 		uris = append(uris, built...)

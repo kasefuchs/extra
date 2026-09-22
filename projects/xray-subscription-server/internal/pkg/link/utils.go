@@ -29,7 +29,7 @@ var linkTypes = map[string]string{
 func findUser(inbound *core.InboundHandlerConfig, email string) (*protocol.User, error) {
 	msg, err := inbound.ProxySettings.GetInstance()
 	if err != nil {
-		return nil, fmt.Errorf("decode proxy settings: %w", err)
+		return nil, fmt.Errorf("%w: %w", ErrInvalidProxySettings, err)
 	}
 
 	var users []*protocol.User
@@ -37,7 +37,7 @@ func findUser(inbound *core.InboundHandlerConfig, email string) (*protocol.User,
 	case *vless.Config:
 		users = cfg.Clients
 	default:
-		return nil, fmt.Errorf("unsupported protocol: %T", msg)
+		return nil, fmt.Errorf("%w: %T", ErrUnsupportedProtocol, msg)
 	}
 
 	for _, user := range users {
@@ -46,18 +46,18 @@ func findUser(inbound *core.InboundHandlerConfig, email string) (*protocol.User,
 		}
 	}
 
-	return nil, fmt.Errorf("user not found")
+	return nil, ErrUserNotFound
 }
 
 func receiverSettings(inbound *core.InboundHandlerConfig) (*proxyman.ReceiverConfig, error) {
 	msg, err := inbound.ReceiverSettings.GetInstance()
 	if err != nil {
-		return nil, fmt.Errorf("decode receiver settings: %w", err)
+		return nil, fmt.Errorf("%w: %w", ErrInvalidReceiverSettings, err)
 	}
 
 	receiver, ok := msg.(*proxyman.ReceiverConfig)
 	if !ok {
-		return nil, fmt.Errorf("unexpected receiver settings type %T", msg)
+		return nil, fmt.Errorf("%w: %T", ErrInvalidSettingsType, msg)
 	}
 
 	return receiver, nil

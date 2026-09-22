@@ -22,11 +22,11 @@ func vlessURI(account *vless.Account, receiver *proxyman.ReceiverConfig, m Metad
 	addParam(&q, "flow", account.Flow)
 
 	if err := addSecurity(&q, receiver.StreamSettings, account.Id); err != nil {
-		return nil, fmt.Errorf("security settings: %w", err)
+		return nil, fmt.Errorf("%w: %w", ErrSecuritySettings, err)
 	}
 
 	if err := addTransport(&q, receiver.StreamSettings); err != nil {
-		return nil, fmt.Errorf("transport settings: %w", err)
+		return nil, fmt.Errorf("%w: %w", ErrTransportSettings, err)
 	}
 
 	uri.RawQuery = q.Encode()
